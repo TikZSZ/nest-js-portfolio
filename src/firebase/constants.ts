@@ -1,0 +1,1 @@
+export const FIREBASE_APP = 'firebase_app'

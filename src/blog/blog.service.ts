@@ -28,7 +28,7 @@ export class BlogService {
 
   async createPostMetadata(name:string,des:string){
     const id = uuidv4()
-    const fileName = `blogs/${id}.html`
+    const fileName = `${id}.html`
     const post = {
       id:id,
       name:name,

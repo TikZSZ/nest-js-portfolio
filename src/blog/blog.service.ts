@@ -20,8 +20,8 @@ export class BlogService {
 
   async createPost(post:Post,content:string){
     const buffer = Buffer.from(content)
-    const fileName = `${post.fileName}.html`
-    const task = await this.fireStorage.uploadBytes(fileName,buffer)
+    const pathWithId = `blogs/${post.fileName}`
+    const task = await this.fireStorage.uploadBytes(pathWithId,buffer)
     const url = await getDownloadURL(task.ref)
     return this.editPostMetadata({...post,url:url})
   }

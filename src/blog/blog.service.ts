@@ -18,6 +18,7 @@ export class BlogService {
     const content = this.contentRepo.create({
       content: 'Hello, World!',
     });
+
     await this.contentRepo.save(content);
     const post = this.postRepo.create({
       name: data.postName,
@@ -55,7 +56,7 @@ export class BlogService {
     return post
   }
   
-  async getPosts(isOwner:boolean=false){
+  async getPosts(isOwner:boolean){
     return this.postRepo.find({order:{
       id:'DESC'
     },take:10,loadRelationIds:true,where:{isOwner}})

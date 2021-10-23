@@ -12,7 +12,7 @@ export class BlogController {
     return this.blogService.createPost(body.data)
   }
 
-  @Get("/posts?isOwner")
+  @Get("/posts")
   getPostsMetadata(@Query("isOwner",ParseBoolPipe) isOwner:boolean){
     return this.blogService.getPosts(isOwner)
   }

@@ -20,7 +20,9 @@ const prodConfig:TypeOrmModuleOptions = {
   database:process.env.PG_DATABASE,
   entities: [Post,Content],
   url:process.env.PG_URL,
-  ssl:true
+  ssl:{
+    rejectUnauthorized:false,
+  }
 }
 
 @Module({

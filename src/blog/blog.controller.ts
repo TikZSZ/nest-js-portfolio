@@ -8,8 +8,11 @@ export class BlogController {
   constructor(private blogService: BlogService){}
   
   @Post("/createPost")
-  createPost(@Body() body:{data:CreatePostDto}){
-    return this.blogService.createPost(body.data)
+  async createPost(@Body() body:{data:CreatePostDto}){
+    const post = await this.blogService.createPost(body.data)
+    return {
+      ...post,content:post.content
+    }
   }
 
   @Get("/posts")

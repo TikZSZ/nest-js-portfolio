@@ -16,7 +16,7 @@ export class Post{
   @Column({type:"boolean",default:false})
   isOwner:boolean
 
-  @Column({type:'time with time zone',default:new Date().toUTCString()})
+  @Column({type:'time with time zone',default: () => "CURRENT_TIMESTAMP"})
   dateCreated:Date
 
   @OneToOne(()=>Content,(content)=>content.post)

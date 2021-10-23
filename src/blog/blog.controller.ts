@@ -11,7 +11,7 @@ export class BlogController {
   async createPost(@Body() body:{data:CreatePostDto}){
     const post = await this.blogService.createPost(body.data)
     return {
-      ...post,content:post.content
+      ...post,content:post.content.id
     }
   }
 

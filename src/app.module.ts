@@ -22,7 +22,8 @@ const prodConfig:TypeOrmModuleOptions = {
   url:process.env.PG_URL,
   ssl:{
     rejectUnauthorized:false,
-  }
+  },
+  synchronize:true
 }
 
 @Module({

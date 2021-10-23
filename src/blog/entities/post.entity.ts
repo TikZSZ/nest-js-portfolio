@@ -1,6 +1,6 @@
 import { Column, PrimaryGeneratedColumn ,OneToOne, Entity} from "typeorm";
 import { Content } from "./content.entity";
-import env from "dotenv"
+
 
 @Entity()
 export class Post{

@@ -18,7 +18,8 @@ const prodConfig:TypeOrmModuleOptions = {
   password:process.env.PG_PASSWORD,
   username:process.env.PG_USERNAME,
   database:process.env.PG_DATABASE,
-  entities: [Post,Content]
+  entities: [Post,Content],
+  url:process.env.PG_URL,
 }
 
 @Module({

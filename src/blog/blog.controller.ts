@@ -1,46 +1,39 @@
 import { Body, Controller, Get, Param, Post, Req, Res } from '@nestjs/common';
-import axios from 'axios';
 import {BlogService} from './blog.service'
-import {Post as P} from './blog.service'
+import { CreatePostDto } from './dtos/CreatePost.dto';
 
-@Controller('blog')
+
+@Controller('/blog')
 export class BlogController {
-  constructor(private BlogService: BlogService){}
+  constructor(private blogService: BlogService){}
   
-  @Post("createPost")
-  createPost(@Body() body:{data:{post:P,content:string}}){
-    console.log(body);
-    
-    const {post,content} = body.data
-    return this.BlogService.createPost(post,content)
-  }
-
-  @Post("createPostMetadata")
-  createPostMetadata(@Body() body:{data:{name:string,des:string}}){
-    const {name,des} = body.data
-    return this.BlogService.createPostMetadata(name,des)
+  @Post("/createPost")
+  createPost(@Body() body:{data:CreatePostDto}){
+    return this.blogService.createPost(body.data)
   }
 
   @Get("/posts")
   getPostsMetadata(){
-    return this.BlogService.getPostsMetadata()
+    return this.blogService.getPosts()
   }
 
-  @Post("/post")
-  async getPost(@Body() body:{data:{url:string}}){
-    console.log(body)
-    const {data} = await axios.get(body.data.url)
-    return data
+  @Get("/content/:contentId")
+  async getContent(@Param('contentId') contentId:number){
+    return this.blogService.getContent(contentId)
+  }
+
+  @Get("/contents")
+  async getContents(){
+    return this.blogService.getContents()
+  }
+
+  @Post("/editContent")
+  editContent(@Body() body:{data:{contentId:number,content:string}}){
+    return this.blogService.editContent(body.data)
   }
 
   @Post("/editPost")
-  editPost(@Body() body:{data:{id:string,content:string,fileName:string}}){
-    const {id,content,fileName} = body.data
-    return this.BlogService.editPost(id,content,fileName)
-  }
-
-  @Post("/editPostMetadata")
-  editPostMetadata(@Body() body:{data:P}){
-    return this.BlogService.editPostMetadata(body.data)
+  editPost(@Body() body:{data:{postId:number,postName?:string,postDescription:string}}){
+    return this.blogService.editPost(body.data)
   }
 }

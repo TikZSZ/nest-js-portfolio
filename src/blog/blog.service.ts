@@ -1,64 +1,75 @@
 import { Injectable } from '@nestjs/common';
-import { FireStoreService,orderBy } from 'src/firebase/fireStore.service';
-import {FireStorageService,} from "../firebase/fireStorage.service"
-import { v4 as uuidv4 } from 'uuid';
-import { getDownloadURL } from '@firebase/storage';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Post as PostRepo } from './entities/post.entity';
+import { Repository } from 'typeorm';
+import { Content as ContentRepo } from './entities/content.entity';
 
-export interface Post{
-  id:string,
-  name:string,
-  des:string,
-  url:string,
-  fileName:string,
-  isOwner:boolean,
-  dateCreated:Date
-}
 
 @Injectable()
 export class BlogService {
-  constructor(private fireStorage: FireStorageService,private fireStore:FireStoreService){}
+  constructor(
+    @InjectRepository(PostRepo) private postRepo: Repository<PostRepo>,
+    @InjectRepository(ContentRepo) private contentRepo: Repository<ContentRepo>,
+  ) {}
 
-  async createPost(post:Post,content:string){
-    const buffer = Buffer.from(content)
-    const pathWithId = `blogs/${post.fileName}`
-    const task = await this.fireStorage.uploadBytes(pathWithId,buffer)
-    const url = await getDownloadURL(task.ref)
-    return this.editPostMetadata({...post,url:url})
+  async createPost(data: { postName: string; postDescription: string }) {
+    console.log(data);
+    
+    const content = this.contentRepo.create({
+      content: 'Hello, World!',
+    });
+    await this.contentRepo.save(content);
+    const post = this.postRepo.create({
+      name: data.postName,
+      description: data.postDescription,
+      content:content
+    });
+
+    return await this.postRepo.save(post);
   }
 
-  async createPostMetadata(name:string,des:string){
-    const id = uuidv4()
-    const fileName = `${id}.html`
-    const post = {
-      id:id,
-      name:name,
-      des:des,
-      url:'',
-      fileName,
-      isOwner:false,
-      dateCreated:new Date()  
+  async editContent(data: { content: string,contentId: number } ) {
+    const content = await this.contentRepo.update({id:data.contentId},{
+      content:data.content
+    })
+    return content
+  }
+
+  async editPost(data: { postId:number, postName?: string; postDescription?: string }){
+    let post
+    if(data.postName && data.postDescription){
+      post = await this.postRepo.update({id:data.postId},{
+        name:data.postName,
+        description:data.postDescription
+      })
+    }else if(data.postName){
+      post = await this.postRepo.update({id:data.postId},{
+        name:data.postName,
+      })
+    }else{
+      post = await this.postRepo.update({id:data.postId},{
+        description:data.postDescription,
+      })
     }
-    await this.fireStore.setDoc<Post>('posts',post,id)
+    
     return post
   }
-
-  async getPostsMetadata():Promise<any>{
-    const posts = await this.fireStore.getDocs<Post>("posts",orderBy("dateCreated","desc"))
-    return posts.docs.map((doc)=>{
-      return doc.data()
-    })
+  
+  async getPosts(){
+    return this.postRepo.find({order:{
+      id:'DESC'
+    },take:10,loadRelationIds:true})
   }
 
-  async editPost(id:string,content:string,fileName:string){
-    const buffer = Buffer.from(content)
-    const task = await this.fireStorage.uploadBytes(`blogs/${fileName}`,buffer)
-    const url = await this.fireStorage.getDownloadURLWithRef(task.ref)
-    // return this.editPostMetadata(id,{url})
-    return url
+  async getPostsPaginated(skip:number){
+    return this.postRepo.find({order:{dateCreated:'ASC'},skip,take:10})
   }
 
-  async editPostMetadata(data:Post){
-    await this.fireStore.setDoc("posts",data,data.id)
-    return data.url
+  async getContent(contentId:number){
+    return this.contentRepo.findOne(contentId)
+  }
+
+  async getContents(){
+    return this.contentRepo.find()
   }
 }

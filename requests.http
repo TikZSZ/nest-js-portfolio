@@ -1,0 +1,47 @@
+
+Get http://localhost:3000/blog/posts
+
+###
+
+Get http://localhost:3000/blog/contents
+
+###
+
+Get http://localhost:3000/blog/content/2
+
+###
+
+Post http://localhost:3000/blog/createPost/
+Content-Type: application/json
+
+{
+  "data":{
+    "postName":"Ad",
+    "postDescription":"YO"
+  }
+}
+
+### 
+
+Post http://localhost:3000/blog/editContent
+Content-Type: application/json
+
+{
+  "data":{
+    "contentId":1,
+    "content":"YO"
+  }
+}
+
+
+###
+
+Post http://localhost:3000/blog/editPost
+Content-Type: application/json
+
+{
+  "data":{
+    "postId":1,
+    "postName":"YO"
+  }
+}

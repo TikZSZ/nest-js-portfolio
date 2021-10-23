@@ -1,5 +1,6 @@
 import { Column, PrimaryGeneratedColumn ,OneToOne, Entity} from "typeorm";
 import { Content } from "./content.entity";
+import env from "dotenv"
 
 @Entity()
 export class Post{
@@ -15,7 +16,7 @@ export class Post{
   @Column({type:"boolean",default:false})
   isOwner:boolean
 
-  @Column({type:'datetime',default:new Date().toUTCString()})
+  @Column({type:'time with time zone',default:new Date().toUTCString()})
   dateCreated:Date
 
   @OneToOne(()=>Content,(content)=>content.post)

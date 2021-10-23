@@ -55,10 +55,10 @@ export class BlogService {
     return post
   }
   
-  async getPosts(){
+  async getPosts(isOwner:boolean=false){
     return this.postRepo.find({order:{
       id:'DESC'
-    },take:10,loadRelationIds:true})
+    },take:10,loadRelationIds:true,where:{isOwner}})
   }
 
   async getPostsPaginated(skip:number){

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Req, Res } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseBoolPipe, Post, Query, Req, Res } from '@nestjs/common';
 import {BlogService} from './blog.service'
 import { CreatePostDto } from './dtos/CreatePost.dto';
 
@@ -12,9 +12,9 @@ export class BlogController {
     return this.blogService.createPost(body.data)
   }
 
-  @Get("/posts")
-  getPostsMetadata(){
-    return this.blogService.getPosts()
+  @Get("/posts?isOwner")
+  getPostsMetadata(@Query("isOwner",ParseBoolPipe) isOwner:boolean){
+    return this.blogService.getPosts(isOwner)
   }
 
   @Get("/content/:contentId")

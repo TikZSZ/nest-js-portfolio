@@ -53,7 +53,6 @@ export class AppModule implements NestModule {
           expires:new Date(2022,12),
           httpOnly:true,
           secureProxy:true,
-          sameSite:'none'
         }),
       )
       .forRoutes('*')

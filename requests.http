@@ -22,20 +22,20 @@ Content-Type: application/json
 {
   "data":{
     "email":"test@test.com",
-    "password":"YO",
+    "password":"YOsaaaaa",
     "name":"Aditya"
   }
 }
 
 ### 
 
-Get http://localhost:3000/user/loginUser
+Post http://localhost:3000/user/loginUser
 Content-Type: application/json
 
 {
   "data":{
     "email":"test@test.com",
-    "password":"YO"
+    "password":"YOsaaaaa"
   }
 }
 

@@ -52,7 +52,6 @@ export class AppModule implements NestModule {
           secure:isProd?true:false,
           expires:new Date(2022,12),
           httpOnly:false,
-          domain:'tikzsz-portfolio.vercel.app'
         }),
       )
       .forRoutes('*')

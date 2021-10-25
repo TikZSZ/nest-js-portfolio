@@ -7,7 +7,7 @@ async function bootstrap() {
   // app.enableCors({credentials:true,origin:process.env.NODE_ENV === 'production'?'https://tikzsz-portfolio.vercel.app':"*",exposedHeaders:'set-cookie',allowedHeaders: 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept, Observe,Set-Cookie',})
   //{origin:process.env.NODE_ENV === 'production'?'https://tikzsz-portfolio.vercel.app':"*"}
   app.set('trust proxy',1)
-  app.enableCors({credentials:true,origin:process.env.NODE_ENV === 'production'?'https://tikzsz-portfolio.vercel.app':"*",methods:"*",allowedHeaders:"*"})
+  app.enableCors({credentials:true,origin:process.env.NODE_ENV === 'production'?'https://tikzsz-portfolio.vercel.app':"*",methods:"*"})
   app.useGlobalPipes(new ValidationPipe())
   await app.listen(process.env.PORT || 3000);
 }

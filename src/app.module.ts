@@ -51,8 +51,9 @@ export class AppModule implements NestModule {
           secret:"asdf",
           secure:isProd?true:false,
           expires:new Date(2022,12),
-          httpOnly:false,
-          secureProxy:true
+          httpOnly:true,
+          secureProxy:true,
+          sameSite:'none'
         }),
       )
       .forRoutes('*')

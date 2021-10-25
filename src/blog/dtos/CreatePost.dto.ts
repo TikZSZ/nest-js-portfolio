@@ -1,9 +1,19 @@
-import { IsObject, IsString } from "class-validator"
+import { Type } from "class-transformer"
+import { IsObject, IsString, ValidateNested } from "class-validator"
 
-export class CreatePostDto{
+
+class Post{
   @IsString()
   postName:string
 
   @IsString()
   postDescription:string
 }
+
+export class CreatePostDto{
+  
+  @ValidateNested()
+  @Type(()=>Post)
+  data:Post
+}
+

@@ -4,7 +4,7 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.enableCors()
+  app.enableCors({credentials:true,origin:'http://localhost:8080',exposedHeaders:'set-cookie'})
   //{origin:process.env.NODE_ENV === 'production'?'https://tikzsz-portfolio.vercel.app':"*"}
   app.useGlobalPipes(new ValidationPipe())
   await app.listen(process.env.PORT || 3000);

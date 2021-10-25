@@ -14,4 +14,6 @@ export class Content{
   @JoinColumn()
   post:Post
 
+  @Column()
+  userId:number
 }

@@ -1,6 +1,10 @@
-import { Body, Controller, Get, Param, ParseBoolPipe, Post, Query, Req, Res } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseBoolPipe, ParseIntPipe, Post, Query, UseGuards } from '@nestjs/common';
+import { GetUser } from 'src/decorators/user.decorator';
+import { AuthGuard } from 'src/guards/AuthGuard';
 import {BlogService} from './blog.service'
 import { CreatePostDto } from './dtos/CreatePost.dto';
+import { EditContentDto } from './dtos/editContent.dto';
+import { EditPostDto } from './dtos/editPost.dto';
 
 
 @Controller('/blog')
@@ -8,16 +12,26 @@ export class BlogController {
   constructor(private blogService: BlogService){}
   
   @Post("/createPost")
-  async createPost(@Body() body:{data:CreatePostDto}){
-    const post = await this.blogService.createPost(body.data)
+  @UseGuards(AuthGuard)
+  async createPost(@Body() body:CreatePostDto,@GetUser() user:any){
+    console.log(user);
+    
+    const post = await this.blogService.createPost(body.data,user)
     return {
       ...post,content:post.content.id
     }
   }
 
+
   @Get("/posts")
-  getPostsMetadata(@Query("isOwner",ParseBoolPipe) isOwner:boolean){
-    return this.blogService.getPosts(isOwner)
+  getPosts(@Query("isOwner",ParseBoolPipe) isOwner:boolean,@Query('skip') skip:number){
+    return this.blogService.getPosts(isOwner,skip)
+  }
+
+  @Get("/userPosts")
+  @UseGuards(AuthGuard)
+  getPostsByUserId(@GetUser() user:any,@Query('skip') skip:number){
+    return this.blogService.getPostsByUserId(user,skip)
   }
 
   @Get("/content/:contentId")
@@ -25,18 +39,28 @@ export class BlogController {
     return this.blogService.getContent(contentId)
   }
 
+  @Get("/contentWithPost/:contentId")
+  async getContentWithPost(@Param('contentId') contentId:number){
+    return this.blogService.getContentWithPostAndUser(contentId)
+  }
+
+
   @Get("/contents")
   async getContents(){
     return this.blogService.getContents()
   }
 
   @Post("/editContent")
-  editContent(@Body() body:{data:{contentId:number,content:string}}){
-    return this.blogService.editContent(body.data)
+  @UseGuards(AuthGuard)
+  editContent(@Body() body:EditContentDto,@GetUser() user:any){
+    return this.blogService.editContent(body.data,user)
   }
 
   @Post("/editPost")
-  editPost(@Body() body:{data:{postId:number,postName?:string,postDescription:string}}){
-    return this.blogService.editPost(body.data)
+  @UseGuards(AuthGuard)
+  editPost(@Body() body:EditPostDto,@GetUser() user:any){
+    console.log(user);
+    
+    return this.blogService.editPost(body.data,user)
   }
 }

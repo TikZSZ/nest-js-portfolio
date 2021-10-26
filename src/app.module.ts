@@ -54,7 +54,7 @@ const CookieDevConfig = {
     BlogModule, 
     UserModule,
     JwtModule.register({
-      secret:isProd?process.env.SECRET:'asdf',
+      secret:'asdf',
     }),
   ],
 })

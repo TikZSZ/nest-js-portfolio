@@ -33,15 +33,16 @@ const prodConfig: TypeOrmModuleOptions = {
   synchronize: true,
 };
 
-const cookieProdConfig = {
+const CookieProdConfig = {
   secret:"asdf",
   secure:true,
   expires:new Date(2022,12),
   httpOnly:true,
   sameSite:'none',
+  secureProxy:true
 }
 
-const cookieDevConfig = {
+const CookieDevConfig = {
   secret:"asdf",
   secure:false,
   expires:new Date(2022,12),
@@ -63,7 +64,7 @@ export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(
-        session(isProd?cookieProdConfig:cookieDevConfig),
+        session(isProd?CookieProdConfig:CookieDevConfig),
       )
       .forRoutes('*')
       .apply(AuthMiddleware)

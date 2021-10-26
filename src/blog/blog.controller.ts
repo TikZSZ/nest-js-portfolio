@@ -14,8 +14,6 @@ export class BlogController {
   @Post("/createPost")
   @UseGuards(AuthGuard)
   async createPost(@Body() body:CreatePostDto,@GetUser() user:any){
-    console.log(user);
-    
     const post = await this.blogService.createPost(body.data,user)
     return {
       ...post,content:post.content.id
@@ -59,8 +57,6 @@ export class BlogController {
   @Post("/editPost")
   @UseGuards(AuthGuard)
   editPost(@Body() body:EditPostDto,@GetUser() user:any){
-    console.log(user);
-    
     return this.blogService.editPost(body.data,user)
   }
 }

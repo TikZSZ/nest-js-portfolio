@@ -24,14 +24,9 @@ export class UserService {
 
   async loginUser(data:LoginUserDto['data']){
     const user = await this.userRepo.findOne({email:data.email},{select:['password','id','isOwner']})
-
     if(!user) throw new NotFoundException()
-    console.log(user);
-    
     const isCorrectPassword = await this.comparePassword(data.password,user.password)
-
     if(!isCorrectPassword) throw new UnauthorizedException()
-
     return user
   }
 
@@ -47,10 +42,7 @@ export class UserService {
     return hashedBuffer.toString('hex')
   }
 
-
   private async comparePassword(suppliedPassword:string,password:string){
-    console.log(suppliedPassword,password);
-    
     const [hashedPassword,salt] = password.split('.')
     const suppliedPasswordHash = await this.hashPassword(salt,suppliedPassword)
     return hashedPassword === suppliedPasswordHash

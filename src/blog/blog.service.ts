@@ -48,10 +48,7 @@ export class BlogService {
     user: UserToken,
   ) {
     const content = await this.contentRepo.findOne(data.contentId)
-
     if (!content) throw new NotFoundException();
-    console.log(content, user);
-
     if (content.userId !== user.id) throw new UnauthorizedException();
     content.content = data.content;
     this.contentRepo.save(content);
@@ -66,7 +63,6 @@ export class BlogService {
       loadRelationIds: true,
     });
     if (!post) throw new NotFoundException();
-    console.log(post, user);
     //@ts-ignore
     if (post.user !== user.id) throw new UnauthorizedException();
     post.name = data.postName ? data.postName : post.name;

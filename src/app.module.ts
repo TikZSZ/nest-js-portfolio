@@ -34,7 +34,7 @@ const prodConfig: TypeOrmModuleOptions = {
 };
 
 const CookieProdConfig = {
-  secret:"asdf",
+  secret:isProd?process.env.SECRET:'asdf',
   secure:true,
   expires:new Date(2022,12),
   httpOnly:true,
@@ -54,7 +54,7 @@ const CookieDevConfig = {
     BlogModule, 
     UserModule,
     JwtModule.register({
-      secret:'asdf',
+      secret:isProd?process.env.SECRET:'asdf',
     }),
   ],
 })

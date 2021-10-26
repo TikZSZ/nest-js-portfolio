@@ -1,9 +1,10 @@
 import { Type } from "class-transformer"
-import { IsObject, IsString, ValidateNested } from "class-validator"
+import { IsObject, IsString, ValidateNested,MaxLength } from "class-validator"
 
 
 class Post{
   @IsString()
+  @MaxLength(100)
   postName:string
 
   @IsString()

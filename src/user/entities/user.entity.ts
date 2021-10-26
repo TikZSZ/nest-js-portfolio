@@ -1,6 +1,9 @@
 import { Post } from "src/blog/entities/post.entity";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
+const isProd = process.env.NODE_ENV === "production";
+
+
 @Entity()
 export class User{
   
@@ -13,7 +16,7 @@ export class User{
   @Column({nullable:true})
   avatar:string
 
-  @Column({select:false})
+  @Column({select:false,unique:isProd})
   email:string
 
   @Column({select:false})

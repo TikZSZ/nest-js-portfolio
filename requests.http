@@ -1,5 +1,5 @@
 
-Get http://localhost:3000/blog/posts?isOwner=true
+Get http://localhost:3000/blog/posts?isOwner=false&skip=2
 
 ###
 

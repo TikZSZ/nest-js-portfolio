@@ -33,13 +33,28 @@ const prodConfig: TypeOrmModuleOptions = {
   synchronize: true,
 };
 
+const cookieProdConfig = {
+  secret:"asdf",
+  secure:true,
+  expires:new Date(2022,12),
+  httpOnly:true,
+  sameSite:'none',
+}
+
+const cookieDevConfig = {
+  secret:"asdf",
+  secure:false,
+  expires:new Date(2022,12),
+  httpOnly:false,
+}
+
 @Module({
   imports: [
     TypeOrmModule.forRoot(isProd?prodConfig:devConfig), 
     BlogModule, 
     UserModule,
     JwtModule.register({
-      secret:'asdf',
+      secret:isProd?process.env.SECRET:'asdf',
     }),
   ],
 })
@@ -47,14 +62,7 @@ export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(
-        session({
-          secret:"asdf",
-          secure:isProd?true:false,
-          expires:new Date(2022,12),
-          httpOnly:true,
-          secureProxy:true,
-          sameSite:'none',
-        }),
+        session(isProd?cookieProdConfig:cookieDevConfig),
       )
       .forRoutes('*')
       .apply(AuthMiddleware)

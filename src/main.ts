@@ -4,7 +4,7 @@ import { AppModule, } from './app.module';
 import {NestExpressApplication} from "@nestjs/platform-express"
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
-  app.set('trust proxy',1)
+  app.set('trust proxy',true)
   app.enableCors({credentials:true,origin:process.env.NODE_ENV === 'production'?'https://tikzsz-portfolio.vercel.app':"http://localhost:8080",methods:"*",exposedHeaders:'set-cookie'})
   app.useGlobalPipes(new ValidationPipe())
   await app.listen(process.env.PORT || 3000);

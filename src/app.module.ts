@@ -38,7 +38,6 @@ const CookieProdConfig = {
   secure:true,
   expires:new Date(2022,12),
   httpOnly:true,
-  signed:false,
   sameSite:'none',
 }
 

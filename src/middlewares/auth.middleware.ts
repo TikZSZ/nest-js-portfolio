@@ -9,12 +9,15 @@ export class AuthMiddleware implements NestMiddleware {
     //@ts-ignore
     console.log(req.cookies);
     if(req.session && req.session.token){
-      //@ts-ignore
-      const user = this.jwtService.verify(req.session.token)
-      //@ts-ignore
-      req.user = user
-      console.log(user);
-      
+      try{
+        //@ts-ignore
+        const user = this.jwtService.verify(req.session.token)
+        //@ts-ignore
+        req.user = user
+      }catch(err){
+        //@ts-ignore
+        req.user = null;
+      }
       next()
       return
     }

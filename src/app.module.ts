@@ -64,7 +64,7 @@ export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(
-        session(isProd?CookieProdConfig:CookieDevConfig),
+        session(CookieProdConfig as any),
       )
       .forRoutes('*')
       .apply(AuthMiddleware)

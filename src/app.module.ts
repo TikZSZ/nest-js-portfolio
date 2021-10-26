@@ -38,8 +38,6 @@ const CookieProdConfig = {
   secure:true,
   expires:new Date(2022,12),
   httpOnly:true,
-  sameSite:'none',
-  secureProxy:true
 }
 
 const CookieDevConfig = {
@@ -64,7 +62,7 @@ export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(
-        session(CookieProdConfig as any),
+        session(isProd?CookieProdConfig:CookieDevConfig),
       )
       .forRoutes('*')
       .apply(AuthMiddleware)

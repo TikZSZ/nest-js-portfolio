@@ -58,6 +58,7 @@ const cookieDevConfig = {
     }),
   ],
 })
+
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer

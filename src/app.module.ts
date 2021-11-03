@@ -56,7 +56,7 @@ const CookieDevConfig = {
     BlogModule, 
     UserModule,
     JwtModule.register({
-      secret:"asdff",
+      secret:"asdf"
     }),
   ],
 })

@@ -1,7 +1,6 @@
 import { Body, Controller, Get, Post, Req, Session } from '@nestjs/common';
 import { CreateUserDto } from './dtos/create.user.dto';
 import { UserService } from './user.service';
-import {Request} from "express"
 import {JwtService} from "@nestjs/jwt"
 import { LoginUserDto } from './dtos/login.user.dto';
 import { GetUser } from 'src/decorators/user.decorator';
@@ -22,6 +21,8 @@ export class UserController {
   async loginUser(@Body() body:LoginUserDto,@Session() session:any){
     const {id,isOwner} = await this.userService.loginUser(body.data) 
     const token = await this.jwtService.signAsync({id,isOwner})
+    console.log(token);
+    
     session.token = token
     return id
   }

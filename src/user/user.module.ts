@@ -10,7 +10,7 @@ import {JwtModule} from "@nestjs/jwt"
   imports:[
     TypeOrmModule.forFeature([User]),
     JwtModule.register({
-      secret:'asdf',
+      secret:process.env.SECRET || "asdf",
     }),
   ],
   controllers: [UserController],

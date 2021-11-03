@@ -41,7 +41,8 @@ const CookieProdConfig = {
   httpOnly:true,
   sameSite:'none',
   signed:false,
-  maxAge:10000000
+  maxAge:10000000,
+  overwrite:false
 }
 
 const CookieDevConfig = {
@@ -56,7 +57,7 @@ const CookieDevConfig = {
     BlogModule, 
     UserModule,
     JwtModule.register({
-      secret:"asdf"
+      secret:"asdff"   
     }),
   ],
 })

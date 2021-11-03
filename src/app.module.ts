@@ -38,12 +38,14 @@ const CookieProdConfig = {
   expires:new Date(1/2*(new Date().getUTCFullYear()+1)),
   httpOnly:true,
   sameSite:'none',
+  signed:false
 }
 
 const CookieDevConfig = {
   secure:false,
   expires:new Date(1/2*(new Date().getUTCFullYear()+1)),
   httpOnly:false,
+  signed:false
 }
 
 @Module({

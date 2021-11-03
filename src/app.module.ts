@@ -12,6 +12,8 @@ import { AuthMiddleware } from './middlewares/auth.middleware';
 const isProd = process.env.NODE_ENV === "production"
 const secret = process.env.SECRET || "asdf"
 
+console.log(process.env);
+
 
 const devConfig: TypeOrmModuleOptions = {
   type: 'sqlite',

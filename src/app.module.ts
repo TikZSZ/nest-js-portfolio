@@ -10,6 +10,8 @@ import session from "cookie-session"
 import { AuthMiddleware } from './middlewares/auth.middleware';
 
 const isProd = process.env.NODE_ENV === "production"
+const secret = process.env.SECRET || "asdf"
+
 
 const devConfig: TypeOrmModuleOptions = {
   type: 'sqlite',
@@ -54,7 +56,7 @@ const CookieDevConfig = {
     BlogModule, 
     UserModule,
     JwtModule.register({
-      secret:process.env.Secret,
+      secret:secret,
     }),
   ],
 })

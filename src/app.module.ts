@@ -10,7 +10,7 @@ import session from "cookie-session"
 import { AuthMiddleware } from './middlewares/auth.middleware';
 
 const isProd = process.env.NODE_ENV === "production"
-const secret =  "asdf"
+const secret =  process.env.SECRET  || "asdf" 
 //process.env.SECRET ||
 
 
@@ -56,7 +56,7 @@ const CookieDevConfig = {
     BlogModule, 
     UserModule,
     JwtModule.register({
-      secret:"asdf",
+      secret:secret,
     }),
   ],
 })

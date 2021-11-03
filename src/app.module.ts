@@ -5,7 +5,7 @@ import { Content } from './blog/entities/content.entity';
 import { Post } from './blog/entities/post.entity';
 import { UserModule } from './user/user.module';
 import { User } from './user/entities/user.entity';
-import { JwtModule, JwtService } from '@nestjs/jwt';
+import { JwtModule } from '@nestjs/jwt';
 import session from "cookie-session"
 import { AuthMiddleware } from './middlewares/auth.middleware';
 
@@ -34,17 +34,15 @@ const prodConfig: TypeOrmModuleOptions = {
 };
 
 const CookieProdConfig = {
-  secret:"asdf",
   secure:true,
-  expires:new Date(2022,12),
+  expires:new Date(1/2*(new Date().getUTCFullYear()+1)),
   httpOnly:true,
   sameSite:'none',
 }
 
 const CookieDevConfig = {
-  secret:"asdf",
   secure:false,
-  expires:new Date(2022,12),
+  expires:new Date(1/2*(new Date().getUTCFullYear()+1)),
   httpOnly:false,
 }
 
@@ -54,7 +52,7 @@ const CookieDevConfig = {
     BlogModule, 
     UserModule,
     JwtModule.register({
-      secret:'asdf',
+      secret:process.env.Secret,
     }),
   ],
 })

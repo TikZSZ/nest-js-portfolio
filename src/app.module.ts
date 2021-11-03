@@ -10,9 +10,8 @@ import session from "cookie-session"
 import { AuthMiddleware } from './middlewares/auth.middleware';
 
 const isProd = process.env.NODE_ENV === "production"
-const secret = process.env.SECRET || "asdf"
-
-console.log(process.env);
+const secret =  "asdf"
+//process.env.SECRET ||
 
 
 const devConfig: TypeOrmModuleOptions = {

@@ -56,6 +56,9 @@ const CookieDevConfig = {
     TypeOrmModule.forRoot(isProd?prodConfig:devConfig), 
     BlogModule, 
     UserModule,
+    JwtModule.register({
+      secret:process.env.SECRET || "asdf",
+    }),
   ],
 })
 

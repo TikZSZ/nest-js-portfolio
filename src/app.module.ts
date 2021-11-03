@@ -38,15 +38,14 @@ const prodConfig: TypeOrmModuleOptions = {
 
 const CookieProdConfig = {
   secure:true,
-  expires:new Date(1/2*(new Date().getUTCFullYear()+1)),
   httpOnly:true,
   sameSite:'none',
-  signed:false
+  signed:false,
+  maxAge:10000000
 }
 
 const CookieDevConfig = {
   secure:false,
-  expires:new Date(1/2*(new Date().getUTCFullYear()+1)),
   httpOnly:false,
   signed:false
 }

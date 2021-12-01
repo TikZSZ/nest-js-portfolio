@@ -23,13 +23,8 @@ const devConfig: TypeOrmModuleOptions = {
 
 const prodConfig: TypeOrmModuleOptions = {
   type: 'postgres',
-  host: process.env.PG_HOST,
-  port: 5432,
-  password: process.env.PG_PASSWORD,
-  username: process.env.PG_USERNAME,
-  database: process.env.PG_DATABASE,
   entities: [Post, Content, User],
-  url: process.env.PG_URL,
+  url: process.env.DATABASE_URL,
   ssl: {
     rejectUnauthorized: false,
   },
